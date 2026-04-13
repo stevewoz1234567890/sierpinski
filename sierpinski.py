@@ -48,9 +48,7 @@ def draw_triangle(p1, p2, p3, color, line_width, screen):
 def find_midpoint(p1, p2):
     x1, y1 = p1
     x2, y2 = p2
-    x_mid = (x1 + x2) // 2
-    y_mid = (y1 + y2) // 2
-    return (x_mid, y_mid)
+    return [(x1 + x2) / 2, (y1 + y2) / 2]
 # THIS FUNCTION MUST BE COMPLETED BY THE STUDENT
 # This function draw a tringle, and then recursively calls it self to ensure
 # that three smaller triangles are drawn within the new triangle, as described
@@ -64,23 +62,15 @@ def find_midpoint(p1, p2):
 # line_width - The width of the line used to draw the triangle.
 # screen - The pygame surface upon which the Sierpinski triangle will be drawn
 def sierpinski(degree, p1, p2, p3, color, line_width, screen):
-    if degree is None:
-        if abs(p1[0] - p2[0]) <= 2 and abs(p2[0] - p3[0]) <= 2 and abs(p1[0] - p3[0]) <= 2:
-            return
-    else:
-        if degree == 0:
-            return
-        else:
-            degree -= 1
-    if abs(p1[0] - p2[0]) <= 2 and abs(p2[0] - p3[0]) <= 2 and abs(p1[0] - p3[0]) <= 2:
-        return
     draw_triangle(p1, p2, p3, color, line_width, screen)
-    a = find_midpoint(p1, p2)
-    b = find_midpoint(p1, p3)
-    c = find_midpoint(p2, p3)
-    sierpinski(degree, p1, a, b, color, line_width, screen)
-    sierpinski(degree, p2, a, c, color, line_width, screen)
-    sierpinski(degree, p3, b, c, color, line_width, screen)
+    if degree == 0:
+        return
+    d = find_midpoint(p1, p2)
+    e = find_midpoint(p1, p3)
+    f = find_midpoint(p2, p3)
+    sierpinski(degree - 1, p1, d, e, color, line_width, screen)
+    sierpinski(degree - 1, d, p2, f, color, line_width, screen)
+    sierpinski(degree - 1, e, f, p3, color, line_width, screen)
 
 def main():
     # This call is necessary to initialize the resources in the pygame library.
@@ -139,5 +129,5 @@ def main():
     pygame.quit()
     # DON'T CHANGE THE CODE HERE
 # DON'T CHANGE THIS EITHER
-if name == "main":
+if __name__ == "__main__":
     main()
