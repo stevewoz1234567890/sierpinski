@@ -106,7 +106,7 @@ def main():
     screen = pygame.display.set_mode(size)
     
     # Colors the background of the drawing surface white.
-    screen.fill(WHITE)
+    screen.fill(colors[WHITE])
     pygame.display.flip()
     
     # Initial call to the recursive function. This will draw the first,
